@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', 'Pretendard', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', 'Pretendard', system-ui, sans-serif;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--sl-bg);
+  color: var(--sl-text);
+  transition: background 0.2s, color 0.2s;
+}
+
+/* ── Design tokens ─────────────────────────────── */
+:root {
+  --sl-bg:          #fafafa;
+  --sl-bg-card:     #ffffff;
+  --sl-bg-hover:    #f4f4f5;
+  --sl-bg-input:    #f4f4f5;
+  --sl-border:      #e4e4e7;
+  --sl-text:        #09090b;
+  --sl-text-2:      #52525b;
+  --sl-text-3:      #a1a1aa;
+  --sl-accent:      #22c55e;
+  --sl-accent-2:    #16a34a;
+  --sl-accent-dim:  #dcfce7;
+  --sl-danger:      #ef4444;
+  --sl-warning:     #f59e0b;
+  --sl-shadow:      0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.06);
+  --sl-radius:      14px;
+}
+
+[data-theme="dark"] {
+  --sl-bg:          #09090b;
+  --sl-bg-card:     #18181b;
+  --sl-bg-hover:    #27272a;
+  --sl-bg-input:    #27272a;
+  --sl-border:      #3f3f46;
+  --sl-text:        #fafafa;
+  --sl-text-2:      #a1a1aa;
+  --sl-text-3:      #71717a;
+  --sl-accent:      #4ade80;
+  --sl-accent-2:    #22c55e;
+  --sl-accent-dim:  #052e16;
+  --sl-danger:      #f87171;
+  --sl-warning:     #fbbf24;
+  --sl-shadow:      0 1px 3px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.35);
+}
+
+/* ── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--sl-border); border-radius: 99px; }
+
+/* ── Card base ─────────────────────────────────── */
+.sl-card {
+  background: var(--sl-bg-card);
+  border: 1px solid var(--sl-border);
+  border-radius: var(--sl-radius);
+  box-shadow: var(--sl-shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.sl-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.12);
+}
+
+/* ── Buttons ───────────────────────────────────── */
+.sl-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--sl-accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 28px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  letter-spacing: 0.01em;
+}
+.sl-btn-primary:hover  { background: var(--sl-accent-2); transform: translateY(-1px); }
+.sl-btn-primary:active { transform: translateY(0); }
+
+.sl-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1.5px solid var(--sl-border);
+  color: var(--sl-text);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.sl-btn-ghost:hover { background: var(--sl-bg-hover); border-color: var(--sl-text-3); }
+
+/* ── Tag / Badge ───────────────────────────────── */
+.sl-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: var(--sl-bg-hover);
+  color: var(--sl-text-2);
+}
+.sl-tag.accent { background: var(--sl-accent-dim); color: var(--sl-accent-2); }
+
+/* ── XP bar ────────────────────────────────────── */
+.sl-xp-track {
+  height: 7px;
+  border-radius: 99px;
+  background: var(--sl-border);
+  overflow: hidden;
+}
+.sl-xp-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--sl-accent);
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Flip card animation ───────────────────────── */
+.flip-scene { perspective: 1000px; }
+.flip-card {
+  position: relative;
+  width: 100%;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped { transform: rotateY(180deg); }
+.flip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--sl-radius);
+}
+.flip-back { transform: rotateY(180deg); }
+
+/* ── Choice button (quiz) ──────────────────────── */
+.sl-choice {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 2px solid var(--sl-border);
+  background: var(--sl-bg-card);
+  color: var(--sl-text);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.sl-choice:hover           { border-color: var(--sl-accent); background: var(--sl-bg-hover); }
+.sl-choice.correct         { border-color: var(--sl-accent); background: var(--sl-accent-dim); color: var(--sl-accent-2); }
+.sl-choice.wrong           { border-color: var(--sl-danger); background: #fef2f2; color: var(--sl-danger); }
+
+[data-theme="dark"] .sl-choice.wrong { background: #2d0a0a; }
+
+/* ── Navbar ────────────────────────────────────── */
+.sl-nav {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  border-bottom: 1px solid var(--sl-border);
+  background: var(--sl-bg-card);
+  padding: 0 20px;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
